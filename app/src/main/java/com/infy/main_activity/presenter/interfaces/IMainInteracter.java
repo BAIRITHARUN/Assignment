@@ -6,7 +6,7 @@ import com.infy.room_database.RoomEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface IMainInterpreter {
+public interface IMainInteracter {
     void getTitles();
 
     void prepareLocalDbList(ArrayList<Row> titilesModelArrayList);

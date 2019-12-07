@@ -14,21 +14,13 @@ public interface IMainView {
 
     void setList(ArrayList<Row> rowArrayList);
 
-    List<RoomEntity> getLocalValues();
-
-    void storeInLocal(RoomEntity titlesArrayList);
-
-    void storeInLocal(List<RoomEntity> roomEntityList);
-
-    void deleteTable();
-
     void showLoading();
 
     void hideRefreshing();
 
     void showToast(String message);
 
-    void getTasks();
+    void getTitlesFromLocal();
 
     void setList(List<RoomEntity> roomEntityList);
 

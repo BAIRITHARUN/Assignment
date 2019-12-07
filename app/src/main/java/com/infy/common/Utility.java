@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 
 public  class Utility {
 
-    public static boolean checkIntenetConnection(Context context){
+    public static boolean checkInternetConnection(Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {

@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.infy.main_activity.model.Row;
 import com.infy.main_activity.model.TitilesModel;
 import com.infy.network.APIUtils;
-import com.infy.main_activity.presenter.interfaces.IMainInterpreter;
+import com.infy.main_activity.presenter.interfaces.IMainInteracter;
 import com.infy.main_activity.presenter.interfaces.IMainView;
 import com.infy.room_database.RoomEntity;
 
@@ -18,14 +18,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainInterpreterImpl implements IMainInterpreter {
+/*class will perform business logic of MainActivity*/
+public class MainInteracterImpl implements IMainInteracter {
 
     IMainView view;
 
-    public MainInterpreterImpl(IMainView view) {
+    /*constructor with IMainView Interface
+    * for access methods in which implemets IMainView*/
+    public MainInteracterImpl(IMainView view) {
         this.view = view;
     }
 
+    /* Method will calls API if internet connection Available
+    * else it will calls getTitlesFromLocal() in MainActivity
+    * it will return Records from Titles*/
     @Override
     public void getTitles(){
         if (view.checkIntentConnection()) {
@@ -63,10 +69,11 @@ public class MainInterpreterImpl implements IMainInterpreter {
         } else {
             view.showToast("Please check your Internet Connection");
             view.hideRefreshing();
-            view.getLocalValues();
+            view.getTitlesFromLocal();
         }
     }
 
+    /* method will prepare list for Titles Table */
     @Override
     public void prepareLocalDbList(ArrayList<Row> titlesModelArrayList){
         ArrayList<RoomEntity> titlesArrayList = new ArrayList<>();
@@ -78,6 +85,7 @@ public class MainInterpreterImpl implements IMainInterpreter {
         view.clearLocalDb(titlesArrayList);
     }
 
+    /*method will prepare list for recyclerview from  list return by Room Database*/
     @Override
     public void prepareList(List<RoomEntity> roomEntityList){
         ArrayList<Row> titlesModelArrayList = new ArrayList<>();
