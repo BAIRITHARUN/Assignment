@@ -12,10 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.infy.R;
-import com.infy.common.TestImageActivity;
 import com.infy.common.Utility;
 import com.infy.main_activity.model.Row;
-import com.infy.main_activity.model.TitilesModel;
 import com.infy.main_activity.presenter.implementation.MainInterpreterImpl;
 import com.infy.main_activity.presenter.interfaces.IMainInterpreter;
 import com.infy.main_activity.presenter.interfaces.IMainView;
@@ -65,9 +63,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         titlesAdapter = new TitlesAdapter(this, rowArrayList, new TitlesAdapter.IOnRowClickListener() {
             @Override
             public void onRowClick(int position) {
-                Intent i =new Intent(MainActivity.this, TestImageActivity.class);
-                i.putExtra("Image", rowArrayList.get(position).getImageHref());
-                startActivity(i);
+
             }
         });
         mRcvTitlesList.setLayoutManager(new LinearLayoutManager(this));
