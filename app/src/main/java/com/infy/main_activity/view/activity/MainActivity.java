@@ -13,7 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.infy.R;
 import com.infy.common.Utility;
 import com.infy.main_activity.model.Row;
-import com.infy.main_activity.presenter.implementation.MainInteracterImpl;
+import com.infy.main_activity.presenter.implementation.MainInteractImpl;
 import com.infy.main_activity.presenter.interfaces.IMainInteracter;
 import com.infy.main_activity.presenter.interfaces.IMainView;
 import com.infy.main_activity.view.adapter.TitlesAdapter;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 //        ButterKnife.bind(this);
         mRcvTitlesList = findViewById(R.id.mRcvTitlesList);
         mSwipeRefreshLayout = findViewById(R.id.mSwipeRefreshLayout);
-        interpreter = new MainInteracterImpl(this);
+        interpreter = new MainInteractImpl(this);
         interpreter.getTitles();
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

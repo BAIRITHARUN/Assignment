@@ -19,13 +19,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /*class will perform business logic of MainActivity*/
-public class MainInteracterImpl implements IMainInteracter {
+public class MainInteractImpl implements IMainInteracter {
 
     IMainView view;
 
     /*constructor with IMainView Interface
     * for access methods in which implemets IMainView*/
-    public MainInteracterImpl(IMainView view) {
+    public MainInteractImpl(IMainView view) {
         this.view = view;
     }
 
