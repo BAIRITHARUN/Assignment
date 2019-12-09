@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -51,36 +52,52 @@ public class TitlesAdapter extends RecyclerView.Adapter<TitlesAdapter.TitlesHold
 
     @Override
     public void onBindViewHolder(@NonNull final TitlesHolder holder, final int position) {
-        holder.mTvTitle.setText(rowArrayList.get(position).getTitle());
-        holder.mTvItemDesc.setText(rowArrayList.get(position).getDescription());
+        if (rowArrayList.get(position).getTitle() != null){
+            holder.mTvTitle.setText(rowArrayList.get(position).getTitle());
+        } else {
+            holder.mTvTitle.setText("No Title");
+        }
+
+        if (rowArrayList.get(position).getDescription() !=null){
+            holder.mTvItemDesc.setText(rowArrayList.get(position).getDescription());
+        } else {
+            holder.mTvItemDesc.setText("No Description");
+        }
         // example url "https://surrealhotels.com/wp-content/uploads/2014/10/Special_Offers2.jpg"
         String imgUrl = rowArrayList.get(position).getImageHref();
         if (imgUrl!=null && imgUrl.contains("http://")){
             imgUrl = imgUrl.replace("http://", "https://");
         }
-        try {
-            Glide.with(context)
-                    .load(imgUrl)
-                    .error(R.drawable.error)
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model,
-                                                    Target<Drawable> target, boolean isFirstResource) {
-                            holder.mPBLoadImage.setVisibility(View.GONE);
-                            return false;
-                        }
+        if (imgUrl !=null) {
+            try {
+                Glide.with(context)
+                        .load(imgUrl)
+                        .error(R.drawable.no_preview)
+                        .placeholder(R.drawable.placeholder)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                        Target<Drawable> target, boolean isFirstResource) {
+                                holder.mPBLoadImage.setVisibility(View.GONE);
+                                return false;
+                            }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model,
-                                                       Target<Drawable> target, DataSource dataSource,
-                                                       boolean isFirstResource) {
-                            holder.mPBLoadImage.setVisibility(View.GONE);
-                            return false;
-                        }
-                    }).into(holder.mImgItem);
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model,
+                                                           Target<Drawable> target, DataSource dataSource,
+                                                           boolean isFirstResource) {
+                                holder.mPBLoadImage.setVisibility(View.GONE);
+                                return false;
+                            }
+                        }).into(holder.mImgItem)
+                ;
 
-        }catch (Exception e){
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            holder.mImgItem.setImageResource(R.drawable.no_preview);
         }
         holder.mRelListItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +110,11 @@ public class TitlesAdapter extends RecyclerView.Adapter<TitlesAdapter.TitlesHold
     @Override
     public int getItemCount() {
         return rowArrayList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public class TitlesHolder extends RecyclerView.ViewHolder {

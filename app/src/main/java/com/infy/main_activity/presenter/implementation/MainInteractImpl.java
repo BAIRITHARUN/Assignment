@@ -5,9 +5,9 @@ import android.os.Build;
 import com.google.gson.Gson;
 import com.infy.main_activity.model.Row;
 import com.infy.main_activity.model.TitilesModel;
+import com.infy.main_activity.presenter.interfaces.IMainFragView;
 import com.infy.network.APIUtils;
 import com.infy.main_activity.presenter.interfaces.IMainInteracter;
-import com.infy.main_activity.presenter.interfaces.IMainView;
 import com.infy.room_database.RoomEntity;
 
 import java.util.ArrayList;
@@ -21,11 +21,11 @@ import retrofit2.Response;
 /*class will perform business logic of MainActivity*/
 public class MainInteractImpl implements IMainInteracter {
 
-    IMainView view;
+    IMainFragView view;
 
-    /*constructor with IMainView Interface
-    * for access methods in which implemets IMainView*/
-    public MainInteractImpl(IMainView view) {
+    /*constructor with IMainFragView Interface
+    * for access methods in which implemets IMainFragView*/
+    public MainInteractImpl(IMainFragView view) {
         this.view = view;
     }
 
