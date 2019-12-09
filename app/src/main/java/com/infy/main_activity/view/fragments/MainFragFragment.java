@@ -43,6 +43,7 @@ import java.util.List;
  * If we run Room Database operations in Main Thread it leads to ANR Exception
  * for that AsyncTask used for Run in New Threads*/
 
+
 public class MainFragFragment extends Fragment implements IMainFragView{
 
     RecyclerView mRcvTitlesList;
