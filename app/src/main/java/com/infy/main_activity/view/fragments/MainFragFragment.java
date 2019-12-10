@@ -100,6 +100,10 @@ public class MainFragFragment extends Fragment implements IMainFragView{
         mRcvTitlesList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRcvTitlesList.setItemAnimator(new DefaultItemAnimator());
         mRcvTitlesList.setAdapter(titlesAdapter);
+        mRcvTitlesList.setHasFixedSize(true);
+        mRcvTitlesList.setItemViewCacheSize(20);
+        mRcvTitlesList.setDrawingCacheEnabled(true);
+        mRcvTitlesList.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
     }
 
     /*method for showing circular loading progress*/
