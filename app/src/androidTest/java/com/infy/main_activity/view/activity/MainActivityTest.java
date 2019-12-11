@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
@@ -34,25 +34,15 @@ public class MainActivityTest {
 
     @Test
     public void mainActivityTest() {
-        ViewInteraction relativeLayout = onView(
-                allOf(withId(R.id.mRelListItem),
+        ViewInteraction frameLayout = onView(
+                allOf(withId(R.id.mFLMain),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.mRcvTitlesList),
-                                        3),
+                                        withId(android.R.id.content),
+                                        0),
                                 0),
                         isDisplayed()));
-        relativeLayout.perform(click());
-
-        ViewInteraction relativeLayout2 = onView(
-                allOf(withId(R.id.mRelListItem),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.mRcvTitlesList),
-                                        1),
-                                0),
-                        isDisplayed()));
-        relativeLayout2.perform(click());
+        frameLayout.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(

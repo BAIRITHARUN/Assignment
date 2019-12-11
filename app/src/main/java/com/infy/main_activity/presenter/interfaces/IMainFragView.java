@@ -18,11 +18,11 @@ public interface IMainFragView {
 
     void hideRefreshing();
 
-    void showToast(String message);
+    void showToast(String message) throws Throwable;
 
-    void getTitlesFromLocal();
+    void getTitlesFromLocal() throws Throwable;
 
-    void setList(List<RoomEntity> roomEntityList);
+    void setList(List<RoomEntity> roomEntityList) throws Throwable;
 
-    void clearLocalDb(List<RoomEntity> roomEntityList);
+    void clearLocalDb(List<RoomEntity> roomEntityList) throws Throwable;
 }

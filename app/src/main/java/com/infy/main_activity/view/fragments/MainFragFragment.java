@@ -85,8 +85,8 @@ public class MainFragFragment extends Fragment implements IMainFragView{
     /*method for updating action bar title*/
     @Override
     public void setActionBarTitle(String title){
+        if (getActivity()!=null)
         ((MainActivity) getActivity()).getSupportActionBar().setTitle(title);
-
     }
 
     /*method for setting list in recycler view*/
@@ -120,25 +120,32 @@ public class MainFragFragment extends Fragment implements IMainFragView{
 
     /*method for showing toast message*/
     @Override
-    public void showToast(String message){
+    public void showToast(String message) throws Throwable{
+        if (getActivity()!=null)
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     /*method executes AsyncTask  to Get list of Titles table from Room Data base
      * */
     @Override
-    public void getTitlesFromLocal() {
+    public void getTitlesFromLocal() throws Throwable{
         class GetTasks extends AsyncTask<Void, Void, List<RoomEntity>> {
 
             @Override
             protected List<RoomEntity> doInBackground(Void... voids) {
-                List<RoomEntity> taskList = TitlesRoomDatabase
-                        .getInstance(getActivity().getApplicationContext()).titlesDao().getTitlesList();
-                return taskList;
+                if (getActivity()!=null) {
+                    List<RoomEntity> taskList = TitlesRoomDatabase
+                            .getInstance(getActivity().getApplicationContext()).titlesDao().getTitlesList();
+                    return taskList;
+                } else {
+                    return null;
+                }
+
             }
 
             @Override
             protected void onPostExecute(List<RoomEntity> tasks) {
+                if (tasks!=null)
                 super.onPostExecute(tasks);
                 interpreter.prepareList(tasks);
             }
@@ -153,13 +160,14 @@ public class MainFragFragment extends Fragment implements IMainFragView{
      * method executes AsyncTask  to insert list into Titles table in Room Data base
      * */
     @Override
-    public void setList(final List<RoomEntity> roomEntityList){
+    public void setList(final List<RoomEntity> roomEntityList) throws Throwable{
 
         class InsertTitles extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
                 //adding to database
+                if (getActivity()!=null)
                 TitlesRoomDatabase.getInstance(getActivity().getApplicationContext()).titlesDao().
                         insertListOfUsers(roomEntityList);
                 return null;
@@ -179,11 +187,12 @@ public class MainFragFragment extends Fragment implements IMainFragView{
      * method executes AsyncTask to delete rows in Titles table from Room Data base
      * */
     @Override
-    public void clearLocalDb(final List<RoomEntity> roomEntityList){
+    public void clearLocalDb(final List<RoomEntity> roomEntityList) throws Throwable{
         class DeleteTask extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
+                if (getActivity()!=null)
                 TitlesRoomDatabase.getInstance(getActivity().getApplicationContext()).titlesDao().deleteTitle();
                 return null;
             }
@@ -191,7 +200,11 @@ public class MainFragFragment extends Fragment implements IMainFragView{
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                setList(roomEntityList);
+                try {
+                    setList(roomEntityList);
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
             }
         }
 
@@ -216,7 +229,11 @@ public class MainFragFragment extends Fragment implements IMainFragView{
                     } else {
                         mTvNetWorkStatus.setVisibility(View.VISIBLE);
                         mTvNetWorkStatus.setText("Your internet Connection is Disabled");
-                        getTitlesFromLocal();
+                        try {
+                            getTitlesFromLocal();
+                        } catch (Throwable throwable) {
+                            throwable.printStackTrace();
+                        }
                     }
                 }
             };

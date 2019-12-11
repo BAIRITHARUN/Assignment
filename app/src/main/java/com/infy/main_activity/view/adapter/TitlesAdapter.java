@@ -99,12 +99,12 @@ public class TitlesAdapter extends RecyclerView.Adapter<TitlesAdapter.TitlesHold
         } else {
             holder.mImgItem.setImageResource(R.drawable.no_preview);
         }
-        holder.mRelListItem.setOnClickListener(new View.OnClickListener() {
+        /*holder.mRelListItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onRowClick(position);
             }
-        });
+        });*/
     }
 
     @Override

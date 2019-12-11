@@ -55,21 +55,33 @@ public class MainInteractImpl implements IMainInteracter {
                         view.hideRefreshing();
                     } catch (Exception e) {
                         e.printStackTrace();
-                        view.hideRefreshing();
-                        view.showToast(e.getMessage());
+                        try {
+                            view.hideRefreshing();
+                            view.showToast(e.getMessage());
+                        } catch (Throwable throwable) {
+                            throwable.printStackTrace();
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    view.hideRefreshing();
-                    view.showToast(t.getMessage());
+                    try {
+                        view.hideRefreshing();
+                        view.showToast(t.getMessage());
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
                 }
             });
         } else {
-            view.showToast("Please check your Internet Connection");
-            view.hideRefreshing();
-            view.getTitlesFromLocal();
+            try {
+                view.showToast("Please check your Internet Connection");
+                view.hideRefreshing();
+                view.getTitlesFromLocal();
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
         }
     }
 
@@ -82,7 +94,11 @@ public class MainInteractImpl implements IMainInteracter {
                     titlesModelArrayList.get(i).getDescription(),titlesModelArrayList.get(i).getImageHref());
             titlesArrayList.add(titles);
         }
-        view.clearLocalDb(titlesArrayList);
+        try {
+            view.clearLocalDb(titlesArrayList);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     /*method will prepare list for recyclerview from  list return by Room Database*/
